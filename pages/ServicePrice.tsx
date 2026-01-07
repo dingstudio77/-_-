@@ -2,17 +2,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Check, Info } from 'lucide-react';
-import { PACKAGES } from '../constants';
+import { PACKAGES } from '../constants.tsx';
 
 const ServicePrice = () => {
   return (
     <div className="pt-32 pb-48 px-4">
       <div className="max-w-7xl mx-auto">
         <header className="text-center mb-24 space-y-6">
-          <h1 className="text-4xl lg:text-6xl font-black">Service & Price</h1>
+          <h1 className="text-4xl lg:text-6xl font-black uppercase tracking-tight">Service & Price</h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            투명한 가격 체계와 명확한 작업 범위를 지향합니다. <br className="hidden md:block"/>
-            당신의 상황에 딱 맞는 패키지를 선택해 보세요.
+            투명한 가격 체계와 명확한 작업 범위를 제안합니다. <br className="hidden md:block"/>
+            당신의 비즈니스 단계에 맞는 패키지를 선택해 보세요.
           </p>
         </header>
 
@@ -46,7 +46,7 @@ const ServicePrice = () => {
                 </ul>
               </div>
 
-              <Link to="/contact" className="w-full text-center bg-[#1a1a1a] text-white py-5 rounded-2xl font-black text-lg hover:bg-[#252525] border border-white/5 transition-all">
+              <Link to="/contact" className="w-full text-center bg-white/5 text-white py-5 rounded-2xl font-black text-lg hover:bg-[#8b5cf6] border border-white/5 transition-all">
                 상담 예약하기
               </Link>
             </div>
@@ -61,13 +61,13 @@ const ServicePrice = () => {
               <span className="font-black uppercase tracking-widest text-xs">Essential Checklist</span>
             </div>
             <h2 className="text-3xl font-black">의뢰 전 준비해 주세요</h2>
-            <p className="text-slate-400">원활한 프로젝트 진행을 위해 아래 내용을 미리 고민해 주시면 좋습니다.</p>
+            <p className="text-slate-400">최상의 결과물을 위해 아래 내용을 미리 고민해 주시면 큰 도움이 됩니다.</p>
             <ul className="space-y-4">
               {[
                 "브랜드가 지향하는 핵심 가치 (3가지 키워드)",
                 "참고하고 싶은 레퍼런스 이미지 또는 링크",
-                "타겟 고객층에 대한 명확한 정의",
-                "홈페이지에 반드시 들어가야 할 내용(카피)",
+                "주요 타겟 고객층에 대한 정의",
+                "홈페이지에 반드시 노출되어야 할 핵심 내용(카피)",
               ].map((item, idx) => (
                 <li key={idx} className="flex items-center space-x-4">
                   <span className="w-6 h-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[10px] text-slate-500 font-bold">{idx + 1}</span>
@@ -80,9 +80,9 @@ const ServicePrice = () => {
             <h2 className="text-3xl font-black">진행 전 안내사항</h2>
             <div className="space-y-6">
               {[
-                { q: "수정 범위는 어떻게 되나요?", a: "기본 시안 확정 후 디테일 수정이 포함되어 있습니다. 패키지에 따라 수정 횟수가 상이할 수 있습니다." },
-                { q: "납품 후 소유권은 어떻게 되나요?", a: "최종 확정된 작업물에 대한 소유권 및 저작권은 고객사에게 귀속됩니다. 단, 포트폴리오로 활용될 수 있습니다." },
-                { q: "A/S가 가능한가요?", a: "홈페이지의 경우 납품 후 일정 기간 동안 간단한 텍스트 수정 및 오류 수정이 무상 지원됩니다." },
+                { q: "수정 범위는 어떻게 되나요?", a: "기본 시안 확정 후 디테일 수정이 포함됩니다. 패키지별로 수정 횟수가 다르니 확인 부탁드립니다." },
+                { q: "납품 후 저작권은 누구에게 있나요?", a: "최종 확정된 작업물에 대한 모든 소유권은 고객사에게 귀속됩니다. (포트폴리오로 활용될 수 있습니다)" },
+                { q: "A/S 서비스도 제공되나요?", a: "홈페이지 납품 후 오타 수정이나 간단한 버그는 1개월간 무상으로 지원해 드립니다." },
               ].map((item, idx) => (
                 <div key={idx} className="space-y-2">
                   <h4 className="font-bold text-[#8b5cf6]">{item.q}</h4>

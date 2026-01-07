@@ -2,7 +2,7 @@
 import React from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { ArrowLeft, ChevronRight } from 'lucide-react';
-import { PortfolioItem } from '../types';
+import { PortfolioItem } from '../types.ts';
 
 interface PortfolioDetailProps {
   portfolio: PortfolioItem[];
@@ -67,7 +67,7 @@ const PortfolioDetail: React.FC<PortfolioDetailProps> = ({ portfolio }) => {
           </div>
         </div>
 
-        {/* Image Gallery - Optimized for high visibility */}
+        {/* Image Gallery */}
         <div className="space-y-24">
           {item.images.map((img, idx) => (
             <div key={idx} className="rounded-[40px] overflow-hidden bg-[#111] border border-white/10 shadow-2xl">
@@ -84,7 +84,7 @@ const PortfolioDetail: React.FC<PortfolioDetailProps> = ({ portfolio }) => {
         {/* Bottom CTA */}
         <div className="mt-32 text-center p-20 bg-gradient-to-b from-white/5 to-transparent rounded-[60px] border border-white/5">
           <h2 className="text-3xl lg:text-4xl font-bold mb-8">"{item.industry}" 업종 상담이 필요하신가요?</h2>
-          <p className="text-slate-400 mb-12">비슷한 프로젝트를 성공적으로 이끌어낸 노하우로 상담해 드립니다.</p>
+          <p className="text-slate-400 mb-12">딩스튜디오의 성공 노하우를 당신의 브랜드에 이식해 드립니다.</p>
           <Link to="/contact" className="inline-flex items-center space-x-3 bg-[#8b5cf6] text-white px-10 py-5 rounded-full font-black text-xl hover:bg-[#7c3aed] hover:scale-105 transition-all shadow-2xl shadow-purple-500/30">
             <span>무료 견적 상담받기</span>
             <ChevronRight size={24} />

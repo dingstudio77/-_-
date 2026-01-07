@@ -9,7 +9,6 @@ interface HomeProps {
   portfolio: PortfolioItem[];
 }
 
-// Fix: Define FAQAccordion as a React.FC to correctly handle standard props like 'key' when used in a map function.
 const FAQAccordion: React.FC<{ question: string, answer: string }> = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -36,7 +35,7 @@ const FAQAccordion: React.FC<{ question: string, answer: string }> = ({ question
 };
 
 const Home: React.FC<HomeProps> = ({ portfolio }) => {
-  // 상위 6개 프로젝트 노출
+  // 메인에는 상위 6개 프로젝트만 노출
   const featuredWorks = portfolio.slice(0, 6);
   const displayReviews = [...REVIEWS, ...REVIEWS, ...REVIEWS];
 
@@ -77,13 +76,13 @@ const Home: React.FC<HomeProps> = ({ portfolio }) => {
         </div>
       </section>
 
-      {/* Featured Portfolio Section - 6개 노출 */}
-      <section className="py-32 bg-[#050505] px-4 border-t border-white/5">
+      {/* Featured Portfolio Section - 6개 프로젝트 */}
+      <section className="py-32 bg-[#0a0a0a] px-4 border-y border-white/5">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <div className="space-y-4 text-left">
-              <h2 className="text-3xl lg:text-5xl font-black uppercase">Featured Works</h2>
-              <p className="text-slate-400 max-w-lg">딩스튜디오가 만들어낸 브랜드의 변화를 확인하세요.</p>
+              <h2 className="text-3xl lg:text-5xl font-black uppercase tracking-tight">Featured Works</h2>
+              <p className="text-slate-400 max-w-lg">딩스튜디오가 만들어낸 브랜드의 가치 있는 변화입니다.</p>
             </div>
             <Link to="/portfolio" className="flex items-center space-x-2 text-[#8b5cf6] font-bold hover:underline">
               <span>전체 포트폴리오 보기</span>
@@ -121,11 +120,26 @@ const Home: React.FC<HomeProps> = ({ portfolio }) => {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="py-32 bg-[#050505] px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl lg:text-5xl font-black uppercase tracking-tight">FAQ</h2>
+            <p className="text-slate-400">자주 묻는 질문들에 대해 명확히 답변해 드립니다.</p>
+          </div>
+          <div className="space-y-2">
+            {FAQ_ITEMS.map((faq, index) => (
+              <FAQAccordion key={index} question={faq.question} answer={faq.answer} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Reviews Section */}
       <section className="py-32 bg-[#0a0a0a] overflow-hidden border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 mb-16 text-center">
-          <h2 className="text-3xl font-black uppercase">Client Voice</h2>
-          <p className="text-slate-400 mt-4">이미 많은 대표님들이 결과에 만족하고 계십니다.</p>
+          <h2 className="text-3xl font-black uppercase tracking-tight">Client Voice</h2>
+          <p className="text-slate-400 mt-4">많은 대표님들이 딩스튜디오와 함께하고 계십니다.</p>
         </div>
         <div className="animate-marquee whitespace-nowrap py-10">
           {displayReviews.map((rev, idx) => (
@@ -146,23 +160,8 @@ const Home: React.FC<HomeProps> = ({ portfolio }) => {
         </div>
       </section>
 
-      {/* FAQ Section - 신규 추가 */}
-      <section className="py-32 bg-[#050505] px-4 border-t border-white/5">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-3xl lg:text-5xl font-black uppercase tracking-tight">FAQ</h2>
-            <p className="text-slate-400">자주 묻는 질문들에 대해 답변해 드립니다.</p>
-          </div>
-          <div className="space-y-2">
-            {FAQ_ITEMS.map((faq, index) => (
-              <FAQAccordion key={index} question={faq.question} answer={faq.answer} />
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Bottom CTA */}
-      <section className="py-32 bg-[#0a0a0a] px-4 text-center border-t border-white/5">
+      <section className="py-32 bg-[#050505] px-4 text-center border-t border-white/5">
         <div className="max-w-4xl mx-auto bg-gradient-to-b from-[#8b5cf6]/10 to-transparent p-16 rounded-[60px] border border-[#8b5cf6]/20">
           <h2 className="text-3xl lg:text-5xl font-black mb-8 leading-tight">당신의 비즈니스도<br/>특별해질 수 있습니다.</h2>
           <p className="text-slate-400 mb-12 text-lg">막막했던 브랜딩, 지금 바로 전문가와 상담하세요.</p>

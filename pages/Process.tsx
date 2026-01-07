@@ -1,17 +1,17 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { PROCESS_STEPS } from '../constants';
+import { PROCESS_STEPS } from '../constants.tsx';
 
 const Process = () => {
   return (
     <div className="pt-32 pb-48 px-4">
       <div className="max-w-7xl mx-auto">
         <header className="text-center mb-24 space-y-6">
-          <h1 className="text-4xl lg:text-6xl font-black uppercase">Process</h1>
+          <h1 className="text-4xl lg:text-6xl font-black uppercase tracking-tight">Process</h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            막막했던 브랜딩, 딩스튜디오와 함께라면 명확해집니다. <br/>
-            체계적인 5단계 시스템을 확인해 보세요.
+            딩스튜디오의 체계적인 5단계 시스템을 통해 <br/>
+            당신의 브랜딩 여정을 투명하고 신속하게 이끌어 드립니다.
           </p>
         </header>
 
@@ -46,14 +46,14 @@ const Process = () => {
 
         <div className="mt-48 bg-gradient-to-r from-[#8b5cf6]/20 to-transparent p-12 lg:p-24 rounded-[60px] border border-white/10 flex flex-col lg:flex-row items-center justify-between gap-12">
           <div className="space-y-6 max-w-xl">
-            <h2 className="text-3xl lg:text-5xl font-black">소통 불안, 제로에 도전합니다</h2>
+            <h2 className="text-3xl lg:text-5xl font-black uppercase tracking-tight">Real-time Feedback</h2>
             <p className="text-lg text-slate-300 leading-relaxed">
-              작업 진행 상황은 주기적인 리포트와 메신저를 통해 실시간으로 공유됩니다.<br/>
-              우리는 당신의 비즈니스 성공을 위한 원팀(One Team)이 됩니다.
+              작업 과정 중 발생하는 모든 소통을 투명하게 공유하며,<br/>
+              고객님의 피드백을 실시간으로 반영하여 최상의 만족도를 끌어냅니다.
             </p>
           </div>
           <Link to="/contact" className="bg-[#8b5cf6] text-white px-10 py-5 rounded-full font-black text-xl hover:bg-[#7c3aed] transition-all">
-            상담 시작하기
+            지금 시작하기
           </Link>
         </div>
       </div>
