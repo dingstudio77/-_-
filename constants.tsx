@@ -47,9 +47,7 @@ export const INITIAL_PORTFOLIO: PortfolioItem[] = [
     industry: 'Premium Bio Cosmetics',
     keywords: ['신뢰감', '혁신', '고급'],
     thumbnail: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=800&auto=format&fit=crop',
-    images: [
-      'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=1200&auto=format&fit=crop'
-    ],
+    images: ['https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=1200&auto=format&fit=crop'],
     description: '줄기세포 배양액 기반의 프리미엄 안티에이징 브랜드 에버셀의 기술력과 품격을 담아낸 공식 웹사이트입니다.',
     problem: '기존 사이트의 브랜드 이미지가 노후화됨.',
     solution: '깊이 있는 퍼플 톤과 메탈릭한 질감을 활용하여 럭셔리 바이오 이미지를 구축함.',
@@ -62,9 +60,7 @@ export const INITIAL_PORTFOLIO: PortfolioItem[] = [
     industry: 'Media & Cultural Heritage',
     keywords: ['아카이브', '감각적', '정교함'],
     thumbnail: 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?q=80&w=800&auto=format&fit=crop',
-    images: [
-      'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?q=80&w=1200&auto=format&fit=crop'
-    ],
+    images: ['https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?q=80&w=1200&auto=format&fit=crop'],
     description: 'MBC의 방대한 자료들을 현대적 감각으로 보존하는 브랜드 패키지 및 플랫폼입니다.',
     problem: '방대한 자료가 단조롭게 보여지는 한계.',
     solution: '강렬한 타이포그래피와 모듈형 그리드 레이아웃을 통해 세련된 이미지를 구현함.',
