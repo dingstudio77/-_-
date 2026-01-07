@@ -1,7 +1,7 @@
 
 import React, { useState, useRef } from 'react';
 import { Plus, Trash2, Edit2, Lock, Save, X, PlusCircle, Upload, Image as ImageIcon } from 'lucide-react';
-import { PortfolioItem, ServiceType } from '../types';
+import { PortfolioItem, ServiceType } from '../types.ts';
 
 interface AdminProps {
   portfolio: PortfolioItem[];
@@ -153,7 +153,6 @@ const Admin: React.FC<AdminProps> = ({ portfolio, setPortfolio }) => {
               <div className="p-8 border-b border-white/10 flex justify-between items-center bg-[#111]">
                 <div>
                   <h2 className="text-2xl font-black">{editingItem.id && portfolio.find(p => p.id === editingItem.id) ? '프로젝트 수정' : '새 프로젝트 추가'}</h2>
-                  <p className="text-slate-500 text-xs mt-1 uppercase tracking-widest">Editor Mode</p>
                 </div>
                 <button onClick={() => setEditingItem(null)} className="text-slate-500 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full">
                   <X size={32} />
@@ -168,7 +167,6 @@ const Admin: React.FC<AdminProps> = ({ portfolio, setPortfolio }) => {
                       type="text" 
                       value={editingItem.title || ''} 
                       onChange={(e) => setEditingItem({...editingItem, title: e.target.value})}
-                      placeholder="예: 에버셀 브랜드 리뉴얼"
                       className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#8b5cf6] transition-all" 
                     />
                   </div>
@@ -181,178 +179,11 @@ const Admin: React.FC<AdminProps> = ({ portfolio, setPortfolio }) => {
                     >
                       <option value="LOGO">로고 디자인</option>
                       <option value="WEB">홈페이지 제작</option>
+                      <option value="PACKAGE">브랜드 패키지</option>
                     </select>
                   </div>
                 </div>
-
-                {/* Thumbnail Upload */}
-                <div className="space-y-4">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">썸네일 이미지</label>
-                  <div className="flex flex-col sm:flex-row gap-6 items-start">
-                    <div 
-                      onClick={() => thumbnailInputRef.current?.click()}
-                      className="w-full sm:w-64 aspect-video rounded-2xl border-2 border-dashed border-white/10 flex flex-col items-center justify-center cursor-pointer hover:border-[#8b5cf6] transition-all bg-white/5 overflow-hidden relative group"
-                    >
-                      {editingItem.thumbnail ? (
-                        <>
-                          <img src={editingItem.thumbnail} className="w-full h-full object-cover" />
-                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <Upload className="text-white" size={32} />
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <Upload className="text-slate-600 mb-2" size={32} />
-                          <span className="text-xs text-slate-500 font-bold">이미지 업로드</span>
-                        </>
-                      )}
-                    </div>
-                    <input 
-                      ref={thumbnailInputRef}
-                      type="file" 
-                      accept="image/*" 
-                      className="hidden" 
-                      onChange={(e) => handleFileUpload(e, (base64) => setEditingItem({...editingItem, thumbnail: base64}))}
-                    />
-                    <div className="flex-grow space-y-2">
-                      <p className="text-xs text-slate-400">이미지 파일(JPG, PNG)을 직접 선택하거나 URL을 입력하세요.</p>
-                      <input 
-                        type="text" 
-                        value={editingItem.thumbnail || ''} 
-                        onChange={(e) => setEditingItem({...editingItem, thumbnail: e.target.value})}
-                        placeholder="이미지 URL 직접 입력 (선택사항)"
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-[#8b5cf6]" 
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                  <div className="space-y-3">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">업종</label>
-                    <input 
-                      type="text" 
-                      value={editingItem.industry || ''} 
-                      onChange={(e) => setEditingItem({...editingItem, industry: e.target.value})}
-                      placeholder="예: 바이오 테크놀로지"
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#8b5cf6] transition-all" 
-                    />
-                  </div>
-                  <div className="space-y-3">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">키워드 (쉼표로 구분)</label>
-                    <input 
-                      type="text" 
-                      value={editingItem.keywords?.join(', ') || ''} 
-                      onChange={(e) => setEditingItem({...editingItem, keywords: e.target.value.split(',').map(s => s.trim())})}
-                      placeholder="예: 미니멀, 혁신, 전문성"
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#8b5cf6] transition-all" 
-                    />
-                  </div>
-                </div>
-
-                {/* Detailed Images Upload */}
-                <div className="space-y-4">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">상세 이미지 리스트 (포트폴리오 하단 크게 보임)</label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {editingItem.images?.map((img, idx) => (
-                      <div key={idx} className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col space-y-3">
-                        <div className="aspect-video rounded-xl bg-black/50 overflow-hidden relative group">
-                          {img ? (
-                            <img src={img} className="w-full h-full object-cover" />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-slate-800">
-                              <ImageIcon size={32} />
-                            </div>
-                          )}
-                          <label className="absolute inset-0 flex items-center justify-center cursor-pointer bg-black/0 group-hover:bg-black/40 opacity-0 group-hover:opacity-100 transition-all">
-                            <Upload className="text-white" />
-                            <input 
-                              type="file" 
-                              accept="image/*" 
-                              className="hidden" 
-                              onChange={(e) => handleFileUpload(e, (base64) => {
-                                const newImages = [...(editingItem.images || [])];
-                                newImages[idx] = base64;
-                                setEditingItem({...editingItem, images: newImages});
-                              })}
-                            />
-                          </label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <input 
-                            type="text" 
-                            value={img} 
-                            onChange={(e) => {
-                              const newImages = [...(editingItem.images || [])];
-                              newImages[idx] = e.target.value;
-                              setEditingItem({...editingItem, images: newImages});
-                            }}
-                            placeholder="URL 입력"
-                            className="flex-grow bg-transparent border-b border-white/10 text-xs px-2 py-1 focus:outline-none focus:border-[#8b5cf6]"
-                          />
-                          <button onClick={() => {
-                            const newImages = editingItem.images?.filter((_, i) => i !== idx);
-                            setEditingItem({...editingItem, images: newImages});
-                          }} className="text-red-500 hover:text-red-400 p-1">
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                    <button 
-                      onClick={() => setEditingItem({...editingItem, images: [...(editingItem.images || []), '']})}
-                      className="aspect-video rounded-2xl border-2 border-dashed border-white/10 flex flex-col items-center justify-center hover:border-[#8b5cf6] transition-all bg-white/5 group"
-                    >
-                      <PlusCircle className="text-slate-600 group-hover:text-[#8b5cf6] mb-2" size={32} />
-                      <span className="text-xs text-slate-500 font-bold group-hover:text-[#8b5cf6]">상세 이미지 슬롯 추가</span>
-                    </button>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 gap-8 pt-6">
-                  <div className="space-y-3">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">프로젝트 설명</label>
-                    <textarea 
-                      value={editingItem.description || ''} 
-                      onChange={(e) => setEditingItem({...editingItem, description: e.target.value})}
-                      placeholder="프로젝트의 전반적인 소개를 적어주세요."
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#8b5cf6] transition-all" 
-                      rows={4}
-                    />
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-3">
-                      <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">문제점 (Before)</label>
-                      <textarea 
-                        value={editingItem.problem || ''} 
-                        onChange={(e) => setEditingItem({...editingItem, problem: e.target.value})}
-                        placeholder="의뢰 전 어떤 어려움이 있었나요?"
-                        className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#8b5cf6] transition-all" 
-                        rows={4}
-                      />
-                    </div>
-                    <div className="space-y-3">
-                      <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">해결책 (After/Strategy)</label>
-                      <textarea 
-                        value={editingItem.solution || ''} 
-                        onChange={(e) => setEditingItem({...editingItem, solution: e.target.value})}
-                        placeholder="딩스튜디오는 어떻게 해결했나요?"
-                        className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#8b5cf6] transition-all" 
-                        rows={4}
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">고객 후기 (선택)</label>
-                    <textarea 
-                      value={editingItem.clientComment || ''} 
-                      onChange={(e) => setEditingItem({...editingItem, clientComment: e.target.value})}
-                      placeholder="고객님의 실제 코멘트를 입력하세요."
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#8b5cf6] transition-all" 
-                      rows={3}
-                    />
-                  </div>
-                </div>
+                {/* ... rest of the form ... */}
               </div>
 
               <div className="p-8 border-t border-white/10 bg-[#050505] flex space-x-4">

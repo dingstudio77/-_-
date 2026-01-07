@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PortfolioItem, ServiceType } from '../types';
+import { PortfolioItem, ServiceType } from '../types.ts';
 
 interface PortfolioProps {
   portfolio: PortfolioItem[];
@@ -18,6 +18,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolio }) => {
     { name: '전체', value: 'ALL' },
     { name: '로고 디자인', value: 'LOGO' },
     { name: '홈페이지 제작', value: 'WEB' },
+    { name: '브랜드 패키지', value: 'PACKAGE' },
   ];
 
   return (
@@ -63,7 +64,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolio }) => {
               </div>
               <div className="px-2 space-y-3">
                 <div className="flex items-center space-x-3 text-[10px] font-black uppercase tracking-widest text-[#8b5cf6]">
-                  <span>{item.category === 'WEB' ? '홈페이지' : '로고'}</span>
+                  <span>{item.category === 'WEB' ? '홈페이지' : item.category === 'LOGO' ? '로고' : '패키지'}</span>
                   <span className="w-1 h-1 bg-white/20 rounded-full" />
                   <span className="text-slate-500">{item.industry}</span>
                 </div>

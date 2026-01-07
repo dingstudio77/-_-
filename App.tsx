@@ -2,16 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight, Mail } from 'lucide-react';
-import Home from './pages/Home';
-import Portfolio from './pages/Portfolio';
-import PortfolioDetail from './pages/PortfolioDetail';
-import ServicePrice from './pages/ServicePrice';
-import Process from './pages/Process';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import Admin from './pages/Admin';
-import { PortfolioItem } from './types';
-import { INITIAL_PORTFOLIO } from './constants';
+import Home from './pages/Home.tsx';
+import Portfolio from './pages/Portfolio.tsx';
+import PortfolioDetail from './pages/PortfolioDetail.tsx';
+import ServicePrice from './pages/ServicePrice.tsx';
+import Process from './pages/Process.tsx';
+import About from './pages/About.tsx';
+import Contact from './pages/Contact.tsx';
+import Admin from './pages/Admin.tsx';
+import { PortfolioItem } from './types.ts';
+import { INITIAL_PORTFOLIO } from './constants.tsx';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -65,7 +65,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-[#0a0a0a] border-b border-white/10 animate-in fade-in slide-in-from-top-4 duration-300">
           <div className="px-4 pt-4 pb-6 space-y-3">
@@ -79,15 +78,13 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
-            
             <Link 
               to="/admin" 
               onClick={() => setIsOpen(false)}
-              className="block px-3 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-600 hover:text-[#8b5cf6]"
+              className="block px-3 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-600"
             >
               Admin Access
             </Link>
-
             <Link 
               to="/contact" 
               onClick={() => setIsOpen(false)}
@@ -136,7 +133,6 @@ const Footer = () => (
             <li>010-1234-5678</li>
             <li>평일 10:00 - 18:00 (점심 12:00 - 13:00)</li>
           </ul>
-          <Link to="/admin" className="text-xs text-white/10 hover:text-[#8b5cf6] mt-8 block transition-colors">Admin Access</Link>
         </div>
       </div>
       <div className="mt-16 pt-8 border-t border-white/5 text-center text-slate-500 text-sm">
@@ -146,28 +142,23 @@ const Footer = () => (
   </footer>
 );
 
-const MobileCTA = () => (
-  <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-sm">
-    <Link to="/contact" className="flex items-center justify-center space-x-2 bg-[#8b5cf6] text-white px-8 py-4 rounded-full font-bold shadow-2xl shadow-purple-500/40 hover:scale-105 active:scale-95 transition-all">
-      <span>무료 상담 신청하기</span>
-      <ArrowRight size={20} />
-    </Link>
-  </div>
-);
-
 const App: React.FC = () => {
   const [portfolio, setPortfolio] = useState<PortfolioItem[]>(() => {
     try {
       const saved = localStorage.getItem('ding_portfolio');
       return saved ? JSON.parse(saved) : INITIAL_PORTFOLIO;
     } catch (e) {
-      console.error("Failed to parse portfolio data", e);
+      console.error("Failed to load portfolio", e);
       return INITIAL_PORTFOLIO;
     }
   });
 
   useEffect(() => {
-    localStorage.setItem('ding_portfolio', JSON.stringify(portfolio));
+    try {
+      localStorage.setItem('ding_portfolio', JSON.stringify(portfolio));
+    } catch (e) {
+      console.error("Failed to save portfolio", e);
+    }
   }, [portfolio]);
 
   return (
@@ -187,7 +178,6 @@ const App: React.FC = () => {
           </Routes>
         </main>
         <Footer />
-        <MobileCTA />
       </div>
     </Router>
   );

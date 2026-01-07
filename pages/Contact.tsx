@@ -126,6 +126,7 @@ const Contact = () => {
                 name="service" 
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-[#8b5cf6] transition-all text-white"
               >
+                <option value="PACKAGE" className="bg-[#111]">올인원 브랜드 패키지</option>
                 <option value="LOGO" className="bg-[#111]">로고 디자인</option>
                 <option value="WEB" className="bg-[#111]">홈페이지 제작</option>
                 <option value="OTHER" className="bg-[#111]">기타 문의</option>
@@ -149,7 +150,7 @@ const Contact = () => {
                 name="message" 
                 rows={5} 
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-[#8b5cf6] transition-all" 
-                placeholder="의뢰하시려는 프로젝트의 목표와 내용을 자유롭게 적어주세요. 참고 사이트 링크가 있다면 함께 남겨주세요."
+                placeholder="의뢰하시려는 프로젝트의 목표와 내용을 자유롭게 적어주세요."
               ></textarea>
             </div>
 
@@ -167,7 +168,6 @@ const Contact = () => {
                 </>
               )}
             </button>
-            <p className="text-[10px] text-slate-500 text-center">보내주신 정보는 프로젝트 상담 목적으로만 사용되며 안전하게 보호됩니다.</p>
           </form>
         </div>
       </div>
