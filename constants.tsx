@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Zap, MessageSquare, ShieldCheck, Clock, CheckCircle } from 'lucide-react';
-import { PortfolioItem, PackageInfo, ReviewItem } from './types.ts';
+import { PortfolioItem, PackageInfo, ReviewItem, FAQItem } from './types.ts';
 
 export const COLORS = {
   primary: '#8b5cf6',
@@ -48,8 +48,7 @@ export const INITIAL_PORTFOLIO: PortfolioItem[] = [
     keywords: ['신뢰감', '혁신', '고급'],
     thumbnail: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=800&auto=format&fit=crop',
     images: [
-      'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=1200&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=1200&auto=format&fit=crop'
     ],
     description: '줄기세포 배양액 기반의 프리미엄 안티에이징 브랜드 에버셀의 기술력과 품격을 담아낸 공식 웹사이트입니다.',
     problem: '기존 사이트의 브랜드 이미지가 노후화됨.',
@@ -70,6 +69,58 @@ export const INITIAL_PORTFOLIO: PortfolioItem[] = [
     problem: '방대한 자료가 단조롭게 보여지는 한계.',
     solution: '강렬한 타이포그래피와 모듈형 그리드 레이아웃을 통해 세련된 이미지를 구현함.',
     clientComment: '방송사의 정체성을 유지하면서도 트렌디한 감각을 놓치지 않았습니다.'
+  },
+  {
+    id: 'minimal-coffee',
+    title: '루프탑 커피 (Rooftop)',
+    category: 'LOGO',
+    industry: 'F&B Coffee Shop',
+    keywords: ['미니멀', '도심', '여유'],
+    thumbnail: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800&auto=format&fit=crop',
+    images: ['https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop'],
+    description: '도심 속 휴식을 지향하는 카페의 아이덴티티를 담은 로고 디자인입니다.',
+    problem: '브랜드 가치가 낮은 저가형 이미지.',
+    solution: '선 위주의 심플한 심볼로 고급스럽고 차분한 분위기를 연출했습니다.',
+    clientComment: '매장 분위기와 너무 잘 어울리는 로고입니다.'
+  },
+  {
+    id: 'tech-hub',
+    title: '테크허브 (Tech Hub)',
+    category: 'WEB',
+    industry: 'SaaS Platform',
+    keywords: ['IT', '플랫폼', '직관적'],
+    thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop',
+    images: ['https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop'],
+    description: '복잡한 데이터를 시각적으로 쉽게 이해할 수 있는 대시보드 중심의 웹사이트입니다.',
+    problem: '기능은 많으나 사용자가 사용하기 너무 복잡함.',
+    solution: 'UX 라이팅과 컬러 시스템을 통해 기능별 위계를 재설정했습니다.',
+    clientComment: '사용자들의 서비스 만족도가 눈에 띄게 좋아졌습니다.'
+  },
+  {
+    id: 'eco-living',
+    title: '에코리빙 (Eco Living)',
+    category: 'PACKAGE',
+    industry: 'Eco-friendly Home',
+    keywords: ['내추럴', '친환경', '편안함'],
+    thumbnail: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800&auto=format&fit=crop',
+    images: ['https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1200&auto=format&fit=crop'],
+    description: '지속 가능한 삶을 제안하는 라이프스타일 브랜드의 전체 패키징 디자인입니다.',
+    problem: '친환경 이미지가 부족한 패키지 디자인.',
+    solution: '크라프트지와 식물성 잉크 느낌을 살린 톤앤매너로 신뢰도를 높였습니다.',
+    clientComment: '패키지 만으로도 브랜드의 가치가 잘 전달됩니다.'
+  },
+  {
+    id: 'urban-fashion',
+    title: '어반 스트릿 (Urban)',
+    category: 'LOGO',
+    industry: 'Fashion Brand',
+    keywords: ['트렌디', '강렬함', '힙'],
+    thumbnail: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=800&auto=format&fit=crop',
+    images: ['https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1200&auto=format&fit=crop'],
+    description: 'MZ세대를 타겟으로 한 역동적인 스트릿 패션 로고 디자인입니다.',
+    problem: '패션 브랜드로서 개성이 부족함.',
+    solution: '과감한 타이포그래피 변형을 통해 기억에 남는 심볼을 개발했습니다.',
+    clientComment: '우리가 원하던 바로 그 힙한 감성입니다.'
   }
 ];
 
@@ -86,4 +137,31 @@ export const PROCESS_STEPS = [
   { title: '시안 제안', desc: '논리적인 근거를 담은 디자인을 제안합니다.', icon: <Zap size={32} /> },
   { title: '수정 & 확정', desc: '디테일을 다듬어 최종 디자인을 완성합니다.', icon: <CheckCircle size={32} /> },
   { title: '납품 & 오픈', desc: '가이드와 함께 최종 결과물을 전달합니다.', icon: <ShieldCheck size={32} /> },
+];
+
+export const FAQ_ITEMS: FAQItem[] = [
+  {
+    question: "작업 기간은 얼마나 걸리나요?",
+    answer: "로고 디자인은 평균 1-2주, 홈페이지 제작은 기획 범위에 따라 3-6주 정도 소요됩니다. 급한 프로젝트의 경우 상담 시 미리 말씀해 주시면 일정 조율이 가능합니다."
+  },
+  {
+    question: "수정은 몇 번까지 가능한가요?",
+    answer: "딩스튜디오는 고객 만족을 위해 기본적으로 '로고 시안 무제한 수정'을 원칙으로 합니다. (단, 전체 컨셉이 바뀌는 재작업 수준의 수정은 추가 비용이 발생할 수 있습니다.)"
+  },
+  {
+    question: "비용은 왜 이 정도인가요?",
+    answer: "우리는 단순히 예쁜 그림을 그리는 것이 아니라, 고객의 매출을 올리는 '전략'을 디자인합니다. 시장 조사, 경쟁사 분석, 타겟 심리 분석이 포함된 전문적인 브랜딩 서비스의 가치를 담았습니다."
+  },
+  {
+    question: "로고만 또는 홈페이지 디자인만도 가능한가요?",
+    answer: "네, 물론입니다. 로고 단독 패키지와 홈페이지 단독 패키지가 준비되어 있으며, 필요하신 범위에 맞춰 유연하게 서비스를 제공해 드립니다."
+  },
+  {
+    question: "레퍼런스가 없는데도 진행 가능해요?",
+    answer: "걱정하지 마세요. 상담 과정에서 저희가 보유한 수많은 업종별 데이터와 트렌드를 바탕으로 고객님의 브랜드에 가장 적합한 스타일을 역으로 제안해 드립니다."
+  },
+  {
+    question: "결제 및 계약 방식은 어떻게 되나요?",
+    answer: "착수금 50%, 잔금 50% 분할 결제를 원칙으로 하며, 모든 프로젝트는 전자 계약서를 작성하여 안전하게 진행됩니다. 세금계산서 발행도 당연히 가능합니다."
+  }
 ];

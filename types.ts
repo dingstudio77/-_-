@@ -32,3 +32,8 @@ export interface ReviewItem {
   content: string;
   rating: number;
 }
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
