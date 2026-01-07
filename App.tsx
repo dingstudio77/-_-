@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Menu, X, ArrowRight, MessageCircle, Mail } from 'lucide-react';
+import { Menu, X, ArrowRight, Mail } from 'lucide-react';
 import Home from './pages/Home';
 import Portfolio from './pages/Portfolio';
 import PortfolioDetail from './pages/PortfolioDetail';
@@ -157,8 +157,13 @@ const MobileCTA = () => (
 
 const App: React.FC = () => {
   const [portfolio, setPortfolio] = useState<PortfolioItem[]>(() => {
-    const saved = localStorage.getItem('ding_portfolio');
-    return saved ? JSON.parse(saved) : INITIAL_PORTFOLIO;
+    try {
+      const saved = localStorage.getItem('ding_portfolio');
+      return saved ? JSON.parse(saved) : INITIAL_PORTFOLIO;
+    } catch (e) {
+      console.error("Failed to parse portfolio data", e);
+      return INITIAL_PORTFOLIO;
+    }
   });
 
   useEffect(() => {
