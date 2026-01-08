@@ -33,6 +33,7 @@ const Header = () => {
           <Link to="/" className="text-2xl font-bold tracking-tighter text-white">
             <span className="text-[#8b5cf6]">DING</span> STUDIO
           </Link>
+          
           <div className="hidden md:flex space-x-8 items-center">
             {navItems.map((item) => (
               <Link 
@@ -43,10 +44,20 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
-            <Link to="/contact" className="bg-[#8b5cf6] text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-[#7c3aed] transition-all shadow-lg shadow-purple-500/20">
-              상담 신청
-            </Link>
+            
+            <div className="flex items-center space-x-6 border-l border-white/10 pl-6 ml-2">
+              <Link 
+                to="/admin" 
+                className="text-[10px] font-bold text-slate-600 hover:text-slate-400 transition-colors uppercase tracking-widest"
+              >
+                Admin
+              </Link>
+              <Link to="/contact" className="bg-[#8b5cf6] text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-[#7c3aed] transition-all shadow-lg shadow-purple-500/20">
+                상담 신청
+              </Link>
+            </div>
           </div>
+
           <div className="md:hidden">
             <button onClick={() => setIsOpen(!isOpen)} className="text-white p-2">
               {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -54,6 +65,7 @@ const Header = () => {
           </div>
         </div>
       </div>
+
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-[#0a0a0a] border-b border-white/10 animate-in fade-in slide-in-from-top-4 duration-300 overflow-hidden">
@@ -71,6 +83,15 @@ const Header = () => {
             <Link to="/contact" onClick={() => setIsOpen(false)} className="block w-full text-center bg-[#8b5cf6] text-white py-4 mt-6 rounded-2xl font-bold text-lg">
               무료 상담 신청
             </Link>
+            <div className="text-center pt-6">
+              <Link 
+                to="/admin" 
+                onClick={() => setIsOpen(false)}
+                className="text-[10px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-[0.3em]"
+              >
+                Admin Access
+              </Link>
+            </div>
           </div>
         </div>
       )}
@@ -100,7 +121,7 @@ const Footer = () => (
           <li><Link to="/portfolio" className="hover:text-[#8b5cf6] transition-colors">포트폴리오</Link></li>
           <li><Link to="/price" className="hover:text-[#8b5cf6] transition-colors">가격 및 서비스</Link></li>
           <li><Link to="/process" className="hover:text-[#8b5cf6] transition-colors">진행 프로세스</Link></li>
-          <li><Link to="/admin" className="opacity-10 hover:opacity-100 transition-opacity">관리자</Link></li>
+          <li><Link to="/admin" className="text-slate-600 text-xs hover:text-[#8b5cf6] transition-colors">관리자 모드</Link></li>
         </ul>
       </div>
       <div>
