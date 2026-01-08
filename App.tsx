@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component, ErrorInfo, ReactNode } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Menu, X, Mail, Phone, Clock } from 'lucide-react';
+import { Menu, X, Mail, Phone, Clock, AlertTriangle, RefreshCw } from 'lucide-react';
 import Home from './pages/Home.tsx';
 import Portfolio from './pages/Portfolio.tsx';
 import PortfolioDetail from './pages/PortfolioDetail.tsx';
@@ -12,6 +12,48 @@ import Contact from './pages/Contact.tsx';
 import Admin from './pages/Admin.tsx';
 import { PortfolioItem } from './types.ts';
 import { INITIAL_PORTFOLIO } from './constants.tsx';
+
+// --- Error Boundary Component ---
+interface Props { children: ReactNode; }
+interface State { hasError: boolean; }
+class ErrorBoundary extends Component<Props, State> {
+  public state: State = { hasError: false };
+  public static getDerivedStateFromError(_: Error): State { return { hasError: true }; }
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error("Uncaught error:", error, errorInfo);
+  }
+  public render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-[#050505] flex items-center justify-center p-6 text-center">
+          <div className="max-w-md space-y-6">
+            <div className="w-20 h-20 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto">
+              <AlertTriangle size={40} />
+            </div>
+            <h1 className="text-2xl font-black">화면을 불러오지 못했습니다.</h1>
+            <p className="text-slate-400">데이터를 불러오는 중 오류가 발생했습니다. 브라우저 저장소를 초기화하거나 새로고침 해주세요.</p>
+            <div className="flex flex-col gap-3">
+              <button 
+                onClick={() => window.location.reload()} 
+                className="bg-[#8b5cf6] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2"
+              >
+                <RefreshCw size={18} /> 페이지 새로고침
+              </button>
+              <button 
+                onClick={() => { localStorage.removeItem('ding_portfolio'); window.location.reload(); }} 
+                className="bg-white/5 text-slate-400 py-3 rounded-xl font-bold text-sm"
+              >
+                데이터 초기화 후 복구
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    // Fix: Access children via this.props in a class component
+    return this.props.children;
+  }
+}
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,9 +108,8 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-[#0a0a0a] border-b border-white/10 animate-in fade-in slide-in-from-top-4 duration-300 overflow-hidden">
+        <div className="md:hidden bg-[#0a0a0a] border-b border-white/10 overflow-hidden">
           <div className="px-4 pt-4 pb-8 space-y-2">
             {navItems.map((item) => (
               <Link 
@@ -84,11 +125,7 @@ const Header = () => {
               무료 상담 신청
             </Link>
             <div className="text-center pt-6">
-              <Link 
-                to="/admin" 
-                onClick={() => setIsOpen(false)}
-                className="text-[10px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-[0.3em]"
-              >
+              <Link to="/admin" onClick={() => setIsOpen(false)} className="text-[10px] text-slate-600 font-bold uppercase tracking-[0.3em]">
                 Admin Access
               </Link>
             </div>
@@ -106,7 +143,7 @@ const Footer = () => (
         <h2 className="text-2xl font-bold tracking-tighter text-white">
           <span className="text-[#8b5cf6]">DING</span> STUDIO
         </h2>
-        <p className="max-w-sm leading-relaxed">
+        <p className="max-w-sm leading-relaxed text-sm">
           예쁜 디자인을 넘어, 브랜드의 신뢰와 문의를 만드는 전략적 디자인 파트너입니다. 
           당신의 비즈니스를 더 가치 있게 만듭니다.
         </p>
@@ -117,11 +154,11 @@ const Footer = () => (
       </div>
       <div>
         <h3 className="text-white font-bold mb-8 uppercase tracking-widest text-xs">Quick Links</h3>
-        <ul className="space-y-4 font-medium">
-          <li><Link to="/portfolio" className="hover:text-[#8b5cf6] transition-colors">포트폴리오</Link></li>
-          <li><Link to="/price" className="hover:text-[#8b5cf6] transition-colors">가격 및 서비스</Link></li>
-          <li><Link to="/process" className="hover:text-[#8b5cf6] transition-colors">진행 프로세스</Link></li>
-          <li><Link to="/admin" className="text-slate-600 text-xs hover:text-[#8b5cf6] transition-colors">관리자 모드</Link></li>
+        <ul className="space-y-4 font-medium text-sm">
+          <li><Link to="/portfolio" className="hover:text-[#8b5cf6]">포트폴리오</Link></li>
+          <li><Link to="/price" className="hover:text-[#8b5cf6]">가격 및 서비스</Link></li>
+          <li><Link to="/process" className="hover:text-[#8b5cf6]">진행 프로세스</Link></li>
+          <li><Link to="/admin" className="text-slate-600 text-xs hover:text-[#8b5cf6]">관리자 모드</Link></li>
         </ul>
       </div>
       <div>
@@ -139,7 +176,7 @@ const Footer = () => (
       </div>
     </div>
     <div className="max-w-7xl mx-auto px-4 mt-20 pt-8 border-t border-white/5 text-center text-xs opacity-40 font-bold uppercase tracking-widest">
-      &copy; {new Date().getFullYear()} Ding Studio. All rights reserved.
+      &copy; {new Date().getFullYear()} Ding Studio.
     </div>
   </footer>
 );
@@ -150,7 +187,11 @@ const App: React.FC = () => {
       const saved = localStorage.getItem('ding_portfolio');
       if (!saved) return INITIAL_PORTFOLIO;
       const parsed = JSON.parse(saved);
-      return Array.isArray(parsed) && parsed.length > 0 ? parsed : INITIAL_PORTFOLIO;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        // 필수 필드(id, title)가 있는지 검증
+        return parsed.filter(item => item && item.id && item.title);
+      }
+      return INITIAL_PORTFOLIO;
     } catch (e) {
       console.warn("Storage data invalid, using defaults");
       return INITIAL_PORTFOLIO;
@@ -166,24 +207,26 @@ const App: React.FC = () => {
   }, [portfolio]);
 
   return (
-    <Router>
-      <div className="min-h-screen flex flex-col bg-[#050505] text-white selection:bg-[#8b5cf6] selection:text-white">
-        <Header />
-        <main className="flex-grow pt-20">
-          <Routes>
-            <Route path="/" element={<Home portfolio={portfolio} />} />
-            <Route path="/portfolio" element={<Portfolio portfolio={portfolio} />} />
-            <Route path="/portfolio/:id" element={<PortfolioDetail portfolio={portfolio} />} />
-            <Route path="/price" element={<ServicePrice />} />
-            <Route path="/process" element={<Process />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/admin" element={<Admin portfolio={portfolio} setPortfolio={setPortfolio} />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <ErrorBoundary>
+      <Router>
+        <div className="min-h-screen flex flex-col bg-[#050505] text-white selection:bg-[#8b5cf6] selection:text-white">
+          <Header />
+          <main className="flex-grow pt-20">
+            <Routes>
+              <Route path="/" element={<Home portfolio={portfolio} />} />
+              <Route path="/portfolio" element={<Portfolio portfolio={portfolio} />} />
+              <Route path="/portfolio/:id" element={<PortfolioDetail portfolio={portfolio} />} />
+              <Route path="/price" element={<ServicePrice />} />
+              <Route path="/process" element={<Process />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/admin" element={<Admin portfolio={portfolio} setPortfolio={setPortfolio} />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </ErrorBoundary>
   );
 };
 

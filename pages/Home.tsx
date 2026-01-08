@@ -34,10 +34,11 @@ const FAQAccordion: React.FC<{ question: string, answer: string }> = ({ question
   );
 };
 
-const Home: React.FC<HomeProps> = ({ portfolio }) => {
-  // 메인에는 상위 6개 프로젝트만 노출
-  const featuredWorks = portfolio.slice(0, 6);
-  const displayReviews = [...REVIEWS, ...REVIEWS, ...REVIEWS];
+const Home: React.FC<HomeProps> = ({ portfolio = [] }) => {
+  // 포트폴리오 데이터가 비어있을 경우 대비
+  const safePortfolio = Array.isArray(portfolio) ? portfolio : [];
+  const featuredWorks = safePortfolio.slice(0, 6);
+  const displayReviews = Array.isArray(REVIEWS) ? [...REVIEWS, ...REVIEWS] : [];
 
   return (
     <div className="overflow-hidden">
@@ -69,14 +70,18 @@ const Home: React.FC<HomeProps> = ({ portfolio }) => {
           </div>
           <div className="hidden lg:block relative">
              <div className="grid grid-cols-2 gap-4">
-               <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" className="rounded-[40px] shadow-2xl border border-white/10" alt="Design 1" />
-               <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=800&auto=format&fit=crop" className="rounded-[40px] shadow-2xl border border-white/10 mt-12" alt="Design 2" />
+               <div className="aspect-[3/4] rounded-[40px] overflow-hidden border border-white/10">
+                 <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Design 1" />
+               </div>
+               <div className="aspect-[3/4] rounded-[40px] overflow-hidden border border-white/10 mt-12">
+                 <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Design 2" />
+               </div>
              </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Portfolio Section - 6개 프로젝트 */}
+      {/* Featured Works */}
       <section className="py-32 bg-[#0a0a0a] px-4 border-y border-white/5">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
@@ -92,35 +97,31 @@ const Home: React.FC<HomeProps> = ({ portfolio }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
             {featuredWorks.map((item) => (
-              <Link to={`/portfolio/${item.id}`} key={item.id} className="group">
+              <Link to={`/portfolio/${item.id}`} key={item?.id} className="group">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[40px] mb-6 border border-white/10 bg-[#111]">
-                  <img 
-                    src={item.thumbnail} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" 
-                  />
+                  {item?.thumbnail && (
+                    <img 
+                      src={item.thumbnail} 
+                      alt={item.title} 
+                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" 
+                    />
+                  )}
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <div className="bg-white text-black px-6 py-2 rounded-full font-bold text-sm">Detail View</div>
                   </div>
                 </div>
                 <div className="px-2">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-[#8b5cf6] mb-2 block">{item.category}</span>
-                  <h3 className="text-2xl font-bold group-hover:text-[#8b5cf6] transition-colors">{item.title}</h3>
-                  <p className="text-slate-500 text-sm mt-1">{item.industry}</p>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-[#8b5cf6] mb-2 block">{item?.category}</span>
+                  <h3 className="text-2xl font-bold group-hover:text-[#8b5cf6] transition-colors">{item?.title}</h3>
+                  <p className="text-slate-500 text-sm mt-1">{item?.industry}</p>
                 </div>
               </Link>
             ))}
           </div>
-          
-          <div className="mt-20 text-center">
-            <Link to="/portfolio" className="inline-block bg-white/5 border border-white/10 text-white px-10 py-4 rounded-full font-bold hover:bg-white/10 transition-all">
-              더 많은 포트폴리오 확인하기
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* FAQ */}
       <section className="py-32 bg-[#050505] px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16 space-y-4">
@@ -128,32 +129,25 @@ const Home: React.FC<HomeProps> = ({ portfolio }) => {
             <p className="text-slate-400">자주 묻는 질문들에 대해 명확히 답변해 드립니다.</p>
           </div>
           <div className="space-y-2">
-            {FAQ_ITEMS.map((faq, index) => (
+            {(FAQ_ITEMS || []).map((faq, index) => (
               <FAQAccordion key={index} question={faq.question} answer={faq.answer} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Reviews Section */}
+      {/* Reviews */}
       <section className="py-32 bg-[#0a0a0a] overflow-hidden border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-4 mb-16 text-center">
-          <h2 className="text-3xl font-black uppercase tracking-tight">Client Voice</h2>
-          <p className="text-slate-400 mt-4">많은 대표님들이 딩스튜디오와 함께하고 계십니다.</p>
-        </div>
         <div className="animate-marquee whitespace-nowrap py-10">
           {displayReviews.map((rev, idx) => (
-            <div key={idx} className="inline-block bg-[#111] border border-white/10 p-8 rounded-[32px] w-[350px] lg:w-[450px] mx-4 whitespace-normal align-top hover:border-[#8b5cf6]/30 transition-colors">
+            <div key={idx} className="inline-block bg-[#111] border border-white/10 p-8 rounded-[32px] w-[350px] lg:w-[450px] mx-4 whitespace-normal align-top">
               <div className="flex space-x-1 mb-6">
                 {[...Array(5)].map((_, i) => <CheckCircle key={i} size={14} className="text-[#8b5cf6]" />)}
               </div>
-              <p className="text-slate-300 italic mb-8 leading-relaxed">"{rev.content}"</p>
-              <div className="pt-6 border-t border-white/5 flex justify-between items-center">
-                <div>
-                  <div className="text-white font-bold">{rev.author}</div>
-                  <div className="text-[#8b5cf6] text-xs font-medium">{rev.industry}</div>
-                </div>
-                <span className="text-slate-500 text-[10px] font-bold uppercase tracking-tighter bg-white/5 px-2 py-1 rounded">{rev.service}</span>
+              <p className="text-slate-300 italic mb-8 leading-relaxed text-sm">"{rev?.content}"</p>
+              <div className="pt-6 border-t border-white/5">
+                <div className="text-white font-bold">{rev?.author}</div>
+                <div className="text-[#8b5cf6] text-xs font-medium">{rev?.industry}</div>
               </div>
             </div>
           ))}
@@ -162,10 +156,9 @@ const Home: React.FC<HomeProps> = ({ portfolio }) => {
 
       {/* Bottom CTA */}
       <section className="py-32 bg-[#050505] px-4 text-center border-t border-white/5">
-        <div className="max-w-4xl mx-auto bg-gradient-to-b from-[#8b5cf6]/10 to-transparent p-16 rounded-[60px] border border-[#8b5cf6]/20">
+        <div className="max-w-4xl mx-auto bg-gradient-to-b from-[#8b5cf6]/10 to-transparent p-12 lg:p-20 rounded-[60px] border border-[#8b5cf6]/20">
           <h2 className="text-3xl lg:text-5xl font-black mb-8 leading-tight">당신의 비즈니스도<br/>특별해질 수 있습니다.</h2>
-          <p className="text-slate-400 mb-12 text-lg">막막했던 브랜딩, 지금 바로 전문가와 상담하세요.</p>
-          <Link to="/contact" className="inline-flex items-center space-x-3 bg-[#8b5cf6] text-white px-10 py-5 rounded-full font-black text-xl hover:bg-[#7c3aed] transition-all shadow-2xl shadow-purple-500/40">
+          <Link to="/contact" className="inline-flex items-center space-x-3 bg-[#8b5cf6] text-white px-10 py-5 rounded-full font-black text-xl hover:bg-[#7c3aed] transition-all">
             <span>무료 견적 상담받기</span>
             <ChevronRight size={24} />
           </Link>
